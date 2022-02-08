@@ -1,5 +1,7 @@
+using mpesa.lib.settings;
+
 namespace Mpesa.lib;
 
 public interface ICredentials {
-  Task<string> GetSecurityCredentialsAsync();  
+  string GetSecurityCredentialsAsync(IConfig config);  
 }

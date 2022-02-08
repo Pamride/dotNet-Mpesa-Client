@@ -7,30 +7,48 @@ using Mpesa.lib.Services;
 
 namespace Mpesa.lib;
 
-public class MpesaHttpClient : IHttpClient
+public class MpesaHttpClient : Services.IMpesa
 {
     private HttpClient _httpclient;
     private Env Enviroment;
     private string _consumerKey;
     private string _consumerSecret;
+    private ICredentials _credentials;
 
-    public MpesaHttpClient( string consumerSecret, string consumerKey, Env enviroment = Env.Sandbox)
+    private AuthResponse _auth;
+
+    public AuthResponse Auth
+    {
+        get
+        {
+            if (_auth is not null) return _auth;
+            return RequestAccessToken().GetAwaiter().GetResult();
+        }
+    }
+
+
+    public MpesaHttpClient(string consumerSecret, string consumerKey, ICredentials credentials, Env enviroment = Env.Sandbox)
     {
         _consumerKey = consumerKey;
         _consumerSecret = consumerSecret;
         Enviroment = enviroment;
-        _httpclient = CreateMpesaClient(Enviroment.ToDescription());
+        _credentials = credentials;
+        _httpclient = CreateMpesaClient(Enviroment.ToDescription()).GetAwaiter().GetResult();
     }
 
-    
 
 
-    private HttpClient CreateMpesaClient(string baseurl)
+
+    private async Task<HttpClient> CreateMpesaClient(string baseurl)
     {
         HttpClient client = new HttpClient()
         {
             BaseAddress = new Uri(baseurl)
         };
+
+        _ = await RequestAccessToken();
+        await updateClientHeaderAccessToken();
+
         return client;
     }
 
@@ -46,7 +64,7 @@ public class MpesaHttpClient : IHttpClient
     public async Task updateClientHeaderAccessToken()
     {
         AuthResponse response = await RequestAccessToken();
-        _httpclient.DefaultRequestHeaders.Add("Authorization","Bearer " + response.AccessToken);
+        _httpclient.DefaultRequestHeaders.Add("Authorization", "Bearer " + response.AccessToken);
     }
 }
 

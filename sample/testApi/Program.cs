@@ -1,11 +1,19 @@
+using mpesa.lib.settings;
+using Mpesa;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+var settings = builder.Configuration.GetSection("MpesaConfig").Get<Config>();
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.ConfigureMpesa(settings);
 
 var app = builder.Build();
 
