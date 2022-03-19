@@ -16,6 +16,6 @@ namespace Mpesa.lib
         /// </summary>
         /// <value>The expiration time of token.</value>
         [JsonPropertyName("expires_in")]
-        public int Expiration { get; set; }
+        public string Expiration { get; set; }
     }
 }

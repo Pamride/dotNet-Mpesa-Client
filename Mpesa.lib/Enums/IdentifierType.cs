@@ -1,4 +1,4 @@
-namespace mpesa.lib.Enums;
+namespace Mpesa.lib.Enums;
 
 public enum IdentifierType {
     MSISDN = 1,

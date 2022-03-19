@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace mpesa.lib.Enums;
+namespace Mpesa.lib.Enums;
 
 /// <summary>
 /// Enum type for available enviroments

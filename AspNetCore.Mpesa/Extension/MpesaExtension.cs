@@ -1,8 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using mpesa.lib.settings;
-
 using Mpesa.lib.Services;
-using mpesa.lib.Enums;
+using Mpesa.lib.Enums;
 using Mpesa.Factory;
 
 

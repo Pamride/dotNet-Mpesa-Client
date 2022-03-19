@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace mpesa.lib.Enums;
+namespace Mpesa.lib.Enums;
 
 public enum CommandType {
    [Description("Reversal for an erroneous C2B transaction")]

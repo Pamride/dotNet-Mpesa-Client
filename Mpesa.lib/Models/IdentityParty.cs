@@ -1,4 +1,4 @@
-using mpesa.lib.Enums;
+using Mpesa.lib.Enums;
 
 namespace mpesa.lib.Models;
 
