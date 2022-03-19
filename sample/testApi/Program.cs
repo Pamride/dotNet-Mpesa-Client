@@ -27,14 +27,15 @@ app.UseSwaggerUI();
 app.MapPost("/paymentrequest" , async() => {
         Enum.TryParse(settings.Env, out Env enviroment);
          IMpesa client = factory.CreateMpesaClient(settings, enviroment);
-         
+
          var lipanampesarequest = factory.CreateLipaNaMpesaRequest(settings);
          lipanampesarequest.Amount = "10";
-         lipanampesarequest.CallBackURL = "nope ";
-         lipanampesarequest.PartyA = "0758874026";
-         lipanampesarequest.PhoneNumber = "0758874026";
+         lipanampesarequest.CallBackURL = "https://eduuh.net/";
+         lipanampesarequest.PartyA = "254758874026";
+         lipanampesarequest.PhoneNumber = "254758874026";
+         
 
-         await client.LipaNaMpesaOnlineAsync(lipanampesarequest); 
+       return await client.LipaNaMpesaOnlineAsync(lipanampesarequest); 
     });
 app.MapPost("/successCallback", () => "succuss");
 app.MapPost("/unsuccessfulCallback", () => "Not Successful");

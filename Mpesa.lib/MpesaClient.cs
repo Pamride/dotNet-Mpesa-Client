@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Timers;
 using Mpesa.lib.Enums;
 using Mpesa.lib.Extension;
 using Mpesa.lib.Routes;
@@ -9,12 +10,15 @@ namespace Mpesa.lib;
 
 public class MpesaHttpClient : Services.IMpesa
 {
+
     private HttpClient _httpclient;
     private Env Enviroment;
     private string _consumerKey;
     private string _consumerSecret;
     private ICredentials _credentials;
 
+    private static System.Timers.Timer aTimer = new System.Timers.Timer();
+    
 
     public HttpClient Client {
         get {
@@ -40,8 +44,13 @@ public class MpesaHttpClient : Services.IMpesa
         Enviroment = enviroment;
          _credentials = credentials;
         CreateMpesaClient(Enviroment.ToDescription()).GetAwaiter().GetResult();
+        aTimer.Elapsed += OnTimedEvent;
     }
 
+    private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+    {
+       RequestAccessToken().GetAwaiter().GetResult();
+    }
 
     private async Task CreateMpesaClient(string baseurl)
     {
@@ -49,22 +58,22 @@ public class MpesaHttpClient : Services.IMpesa
         {
             BaseAddress = new Uri(baseurl)
         };
-        updateClientHeaderAccessToken(await RequestAccessToken());
+        await RequestAccessToken();
     }
 
     private async Task<AuthResponse> RequestAccessToken()
     {
+
         byte[] creds = Encoding.UTF8.GetBytes(_consumerSecret + ":" + _consumerKey);
         String encoded = System.Convert.ToBase64String(creds);
         _httpclient?.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
         var response = await _httpclient.GetStreamAsync(MpesaRoute.Client_Crendetial);
-        return await JsonSerializer.DeserializeAsync<AuthResponse>(response);
+        var responseObject = await JsonSerializer.DeserializeAsync<AuthResponse>(response);
+        _httpclient.DefaultRequestHeaders.Remove("Authorization");
+        _httpclient.DefaultRequestHeaders.Add("Authorization", "Bearer " + responseObject.AccessToken);
+        if(responseObject is not null) aTimer.Interval = Double.Parse(responseObject.AccessToken) * 1000;
+        return responseObject;
     }
 
-    private void updateClientHeaderAccessToken(AuthResponse response)
-    {
-        _httpclient.DefaultRequestHeaders.Remove("Authorization");
-        _httpclient.DefaultRequestHeaders.Add("Authorization", "Bearer " + response.AccessToken);
-    }
 }
 
