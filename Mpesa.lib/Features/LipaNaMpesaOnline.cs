@@ -12,8 +12,9 @@ namespace Mpesa.Features;
 public class LipaNaMpesaRequest
 {
   public string? BusinessShortCode { get; set; }
-  public string? Password { get; set; }
-  public string? Timestamp { get; set; } = DateTime.Now.ToString("yyyyMMddHHmmss");
+  public string? Password {get; set;}
+
+  public string? Timestamp { get; set; } 
   [JsonConverter(typeof(JsonStringEnumConverter))]
   public CommandType TransactionType { get; set; } = CommandType.CustomerPayBillOnline;
   public string? Amount { get; set; }
@@ -26,6 +27,7 @@ public class LipaNaMpesaRequest
 }
 
 public interface IResponse{
+
 
 }
 
@@ -47,23 +49,18 @@ public class Error :  IResponse
 
 public static class LipaNaMpesaOnline {
 
-  public static async Task<IResponse> LipaNaMpesaOnlineAsync(this IMpesa mpesaclient, LipaNaMpesaRequest lipanampesaonlinerequest){
-
+  public static async Task<string> LipaNaMpesaOnlineAsync(this IMpesa mpesaclient, LipaNaMpesaRequest lipanampesaonlinerequest){
+     string jsonresponse = string.Empty;
     try {
     var payload = JsonSerializer.Serialize(lipanampesaonlinerequest);
     HttpContent c = new StringContent(payload, Encoding.UTF8, "application/json");
     var response = await mpesaclient.Client.PostAsync(MpesaRoute.LipaNa_MpesaOnline, c);
-    string contentasstream = await response.Content.ReadAsStringAsync();
-    Console.WriteLine(contentasstream);
-
-    if(response.StatusCode ==  HttpStatusCode.InternalServerError || response.StatusCode ==  HttpStatusCode.BadRequest){
-         return JsonSerializer.Deserialize<Error>(contentasstream);
-    }else if(response.StatusCode ==  HttpStatusCode.OK ){
-         return JsonSerializer.Deserialize<LipaNaMpesaResponse>(contentasstream);
-    }
+    jsonresponse = await response.Content.ReadAsStringAsync();
+    Console.WriteLine(jsonresponse);
+    return jsonresponse;
    }catch(Exception ex) {
         throw new Exception(ex.Message);
    }
-        throw new Exception("Try new stuff");
+    return jsonresponse;
   }
 }

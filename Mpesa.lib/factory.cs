@@ -21,10 +21,11 @@ public static class factory {
 {
     return new LipaNaMpesaRequest {
       BusinessShortCode = config.BusinessShortCode,
-      Password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTYwMjE2MTY1NjI3",
+      Timestamp = config.Timestamp,
       PartyB = config.BusinessShortCode,
       CallBackURL = config.CallBackURL,
       AccountReference = config.AccountReference,
+      Password = config.Password,
     };
 }
 }

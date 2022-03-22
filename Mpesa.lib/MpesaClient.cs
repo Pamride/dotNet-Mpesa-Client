@@ -26,17 +26,6 @@ public class MpesaHttpClient : Services.IMpesa
         }
     }
 
-    private AuthResponse _auth;
-
-    public AuthResponse Auth
-    {
-        get
-        {
-            if (_auth is not null) return _auth;
-            return RequestAccessToken().GetAwaiter().GetResult();
-        }
-    }
-
     public MpesaHttpClient(string consumerSecret, string consumerKey, ICredentials credentials, Env enviroment = Env.Sandbox)
     {
         _consumerKey = consumerKey;
@@ -49,7 +38,7 @@ public class MpesaHttpClient : Services.IMpesa
 
     private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
     {
-       RequestAccessToken().GetAwaiter().GetResult();
+       UpdateAuthorizationToken((GetTokenAsync().GetAwaiter().GetResult()).AccessToken);
     }
 
     private async Task CreateMpesaClient(string baseurl)
@@ -58,21 +47,29 @@ public class MpesaHttpClient : Services.IMpesa
         {
             BaseAddress = new Uri(baseurl)
         };
-        await RequestAccessToken();
+        AuthResponse tokenresponse = await GetTokenAsync();
+        UpdateAuthorizationToken(tokenresponse.AccessToken);
+        UpdateTimerRefreshInterval(aTimer, tokenresponse.Expiration);
     }
+    
 
-    private async Task<AuthResponse> RequestAccessToken()
-    {
-
+    private async Task<AuthResponse> GetTokenAsync() {
+        AuthResponse response = null;
         byte[] creds = Encoding.UTF8.GetBytes(_consumerSecret + ":" + _consumerKey);
         String encoded = System.Convert.ToBase64String(creds);
         _httpclient?.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
-        var response = await _httpclient.GetStreamAsync(MpesaRoute.Client_Crendetial);
-        var responseObject = await JsonSerializer.DeserializeAsync<AuthResponse>(response);
-        _httpclient.DefaultRequestHeaders.Remove("Authorization");
-        _httpclient.DefaultRequestHeaders.Add("Authorization", "Bearer " + responseObject.AccessToken);
-        if(responseObject is not null) aTimer.Interval = Double.Parse(responseObject.AccessToken) * 1000;
-        return responseObject;
+        response = await JsonSerializer.DeserializeAsync<AuthResponse>(await _httpclient.GetStreamAsync(MpesaRoute.Client_Crendetial));
+        return response;
+    }
+
+    private  void UpdateAuthorizationToken(string accesstoken){
+              _httpclient.DefaultRequestHeaders.Remove("Authorization");
+              _httpclient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accesstoken);
+    }
+
+    private void UpdateTimerRefreshInterval(System.Timers.Timer timer, string interval)
+    {
+         timer.Interval = Double.Parse(interval) * 1000;
     }
 
 }

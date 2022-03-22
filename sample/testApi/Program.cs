@@ -34,8 +34,8 @@ app.MapPost("/paymentrequest" , async() => {
          lipanampesarequest.PartyA = "254758874026";
          lipanampesarequest.PhoneNumber = "254758874026";
          
-
-       return await client.LipaNaMpesaOnlineAsync(lipanampesarequest); 
+       var response =  await client.LipaNaMpesaOnlineAsync(lipanampesarequest); 
+       return response;
     });
 app.MapPost("/successCallback", () => "succuss");
 app.MapPost("/unsuccessfulCallback", () => "Not Successful");
