@@ -12,32 +12,38 @@ var builder = WebApplication.CreateBuilder(args);
 
 var settings = builder.Configuration.GetSection("MpesaConfig").Get<Config>();
 
+builder.Services.ConfigureMpesa(settings);
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.ConfigureMpesa(settings);
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapPost("/paymentrequest" , async() => {
-        Enum.TryParse(settings.Env, out Env enviroment);
-         IMpesa client = factory.CreateMpesaClient(settings, enviroment);
+app.MapPost("/lipanampesaonline" , async(IMpesa mpesa,string phonenumber, string amount, string url) => {
 
          var lipanampesarequest = factory.CreateLipaNaMpesaRequest(settings);
-         lipanampesarequest.Amount = "10";
-         lipanampesarequest.CallBackURL = "https://eduuh.net/";
-         lipanampesarequest.PartyA = "254758874026";
-         lipanampesarequest.PhoneNumber = "254758874026";
-         
-       var response =  await client.LipaNaMpesaOnlineAsync(lipanampesarequest); 
-       return response;
+         lipanampesarequest.Amount = amount;
+         lipanampesarequest.CallBackURL = url;
+         lipanampesarequest.PartyA = phonenumber;
+         lipanampesarequest.PhoneNumber = phonenumber;
+
+       var response =  await mpesa.LipaNaMpesaOnlineAsync(lipanampesarequest); 
+       return Results.Ok(response);
     });
-app.MapPost("/successCallback", () => "succuss");
+
+app.MapPost("/lipanampesaonlinestatus", async(IMpesa mpesa, string CheckoutRequestId) =>{
+     var lipanampesastatusrequest = factory.CreateLipaNaMpesaStatusRequest(settings);
+     lipanampesastatusrequest.CheckoutRequestID =  CheckoutRequestId;
+     var response = await mpesa.LipaNaMpesaOnlineStatusAsync(lipanampesastatusrequest);
+     return Results.Ok(response);
+});
+
 app.MapPost("/unsuccessfulCallback", () => "Not Successful");
 
 app.UseHttpsRedirection();

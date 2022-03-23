@@ -28,5 +28,14 @@ public static class factory {
       Password = config.Password,
     };
 }
+
+  public static LipaNaMpesaQueryRequest CreateLipaNaMpesaStatusRequest(IConfig config) 
+{
+    return new LipaNaMpesaQueryRequest  {
+      BusinessShortCode = config.BusinessShortCode,
+      Timestamp = config.Timestamp,
+      Password = config.Password,
+    };
+}
 }
 

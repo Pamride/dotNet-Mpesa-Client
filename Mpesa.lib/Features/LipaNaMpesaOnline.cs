@@ -1,11 +1,9 @@
 using Mpesa.lib.Enums;
 using System.Text;
 using System.Text.Json;
-using Mpesa.lib;
 using Mpesa.lib.Routes;
 using Mpesa.lib.Services;
 using System.Text.Json.Serialization;
-using System.Net;
 
 namespace Mpesa.Features;
 
@@ -49,18 +47,10 @@ public class Error :  IResponse
 
 public static class LipaNaMpesaOnline {
 
-  public static async Task<string> LipaNaMpesaOnlineAsync(this IMpesa mpesaclient, LipaNaMpesaRequest lipanampesaonlinerequest){
-     string jsonresponse = string.Empty;
-    try {
+  public static async Task<IResponse> LipaNaMpesaOnlineAsync(this IMpesa mpesaclient, LipaNaMpesaRequest lipanampesaonlinerequest){
     var payload = JsonSerializer.Serialize(lipanampesaonlinerequest);
     HttpContent c = new StringContent(payload, Encoding.UTF8, "application/json");
     var response = await mpesaclient.Client.PostAsync(MpesaRoute.LipaNa_MpesaOnline, c);
-    jsonresponse = await response.Content.ReadAsStringAsync();
-    Console.WriteLine(jsonresponse);
-    return jsonresponse;
-   }catch(Exception ex) {
-        throw new Exception(ex.Message);
-   }
-    return jsonresponse;
-  }
+    return await JsonSerializer.DeserializeAsync<LipaNaMpesaResponse>(await response.Content.ReadAsStreamAsync());
+}
 }
