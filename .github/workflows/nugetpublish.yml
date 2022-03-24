@@ -49,6 +49,7 @@ jobs:
 
     # - name: Run tests
     #   run: dotnet test /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
+
       
     - name: Publish
       if: startsWith(github.ref, 'refs/heads/release')
