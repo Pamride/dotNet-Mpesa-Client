@@ -1,5 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+<PropertyGroup>
+  <PackageId>AspNetCore.MpesaClient</PackageId>
+  <Version>1.0.0</Version>
+  <Authors>Edwin Muraya, Humphrey Shikunzi</Authors>
+  <Company>Safiricar</Company>
+  <Description>
+     A package that builds and mpesa client from appsettings.json configurations and sets the Client as a Sington to be used from .Net core dependency Injection
+  </Description>
+   <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+</PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Mpesa.lib\Mpesa.lib.csproj" />
   </ItemGroup>
