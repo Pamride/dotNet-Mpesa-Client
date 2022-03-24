@@ -8,8 +8,8 @@ jobs:
     name: build, pack & publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
+    - uses: actions/checkout@v2
+      
     - name: Restore dependencies
       run: nuget restore $SOLUTION
 
@@ -29,11 +29,11 @@ jobs:
     - name: Build
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG -p:Version=$BUILD_VERSION --no-restore
 
-      # Publish
-      - name: publish on version change
-        id: publish_nuget
-        uses: rohith/publish-nuget@v2
-        with:
+    # Publish
+    - name: publish on version change
+      id: publish_nuget
+      uses: rohith/publish-nuget@v2
+      with:
           # Filepath of the project to be packaged, relative to root of repository
           PROJECT_FILE_PATH: AspNetCore.Mpesa/AspNetCore.Mpesa.csproj
           
@@ -56,7 +56,7 @@ jobs:
           # TAG_FORMAT: v*
 
           # API key to authenticate with NuGet server
-           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
           # NuGet server uri hosting the packages, defaults to https://api.nuget.org
           NUGET_SOURCE: https://api.nuget.org
