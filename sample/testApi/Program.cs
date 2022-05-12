@@ -6,7 +6,6 @@ using Mpesa.Factory;
 using Mpesa.Features;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 
@@ -25,7 +24,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapPost("/lipanampesaonline" , async(IMpesa mpesa,string phonenumber, string amount, string url) => {
+app.MapPost("/lipaNaMpesaOnline" , async(IMpesa mpesa,string phonenumber, string amount, string url) => {
 
          var lipanampesarequest = factory.CreateLipaNaMpesaRequest(settings);
          lipanampesarequest.Amount = amount;
@@ -37,7 +36,7 @@ app.MapPost("/lipanampesaonline" , async(IMpesa mpesa,string phonenumber, string
        return Results.Ok(response);
     });
 
-app.MapPost("/lipanampesaonlinestatus", async(IMpesa mpesa, string CheckoutRequestId) =>{
+app.MapPost("/lipaNaMpesaOnlineStatus", async(IMpesa mpesa, string CheckoutRequestId) =>{
      var lipanampesastatusrequest = factory.CreateLipaNaMpesaStatusRequest(settings);
      lipanampesastatusrequest.CheckoutRequestID =  CheckoutRequestId;
      var response = await mpesa.LipaNaMpesaOnlineStatusAsync(lipanampesastatusrequest);

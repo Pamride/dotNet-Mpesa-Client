@@ -45,7 +45,8 @@ public class Error :  IResponse
         public string? errorMessage { get; set; }
 }
 
-public static class LipaNaMpesaOnline {
+public static class LipaNaMpesaOnline 
+{
 
   public static async Task<IResponse> LipaNaMpesaOnlineAsync(this IMpesa mpesaclient, LipaNaMpesaRequest lipanampesaonlinerequest){
     var payload = JsonSerializer.Serialize(lipanampesaonlinerequest);
