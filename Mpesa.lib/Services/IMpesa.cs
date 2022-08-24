@@ -1,7 +1,8 @@
-namespace Mpesa.lib.Services;
+namespace Mpesa.Lib.Services;
 
-public interface IMpesa {
-   public HttpClient Client {get; }
+public interface IMpesa
+{
+    public HttpClient Client { get; }
 }
 
 

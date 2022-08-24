@@ -1,10 +1,12 @@
-namespace mpesa.lib.Models;
+namespace Mpesa.Lib.Models;
 
-public class CommandID{
-   public string Command {get; set;}
-   private string Description {get; set;}
+public class CommandID
+{
+    public string? Command { get; set; }
+    private string? Description { get; set; }
 
-   public override string ToString(){
-      return Command;
-   }
+    public override string ToString()
+    {
+        return Command!;
+    }
 }

@@ -1,8 +1,8 @@
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using mpesa.lib.settings;
+using Mpesa.Lib.Settings;
 
-namespace Mpesa.lib;
+namespace Mpesa.Lib;
 
 public class Credentials : ICredentials
 {

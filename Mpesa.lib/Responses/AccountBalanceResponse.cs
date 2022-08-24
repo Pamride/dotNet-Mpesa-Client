@@ -1,4 +1,4 @@
-namespace Mpesa.lib
+namespace Mpesa.Lib
 {
     public class AccountBalanceResponse
     {
