@@ -16,6 +16,9 @@ public static class factory
         return mclient;
     }
 
+
+    #region LipaNaMpesaOnline
+    
     public static LipaNaMpesaRequest CreateLipaNaMpesaRequest(IConfig config)
     {
         return new LipaNaMpesaRequest
@@ -38,5 +41,31 @@ public static class factory
             Password = config.Password,
         };
     }
+
+    #endregion
+
+
+    #region B2C
+
+    public static B2CRequest CreateB2CRequest(IConfig config)
+    {
+        return new B2CRequest
+        {
+            InitiatorName = config.Initiator,
+            SecurityCredential = config.SecurityCredential,
+            PartyB = config.BusinessShortCode
+        };
+
+    }
+
+    public static B2CStatusRequest CreateB2CStatusRequest(IConfig config)
+    {
+        return new B2CStatusRequest
+        {
+
+        };
+    }
+
+    #endregion
 }
 

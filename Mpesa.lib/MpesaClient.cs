@@ -13,7 +13,6 @@ public class MpesaHttpClient : Services.IMpesa
     private string _consumerKey;
     private string _consumerSecret;
     private ICredentials _credentials;
-
     private static System.Timers.Timer aTimer = new System.Timers.Timer();
 
     public HttpClient Client

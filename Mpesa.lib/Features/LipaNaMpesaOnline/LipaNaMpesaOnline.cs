@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Mpesa.Features;
 
-public class LipaNaMpesaRequest
+public class LipaNaMpesaRequest 
 {
     public string? BusinessShortCode { get; set; }
     public string? Password { get; set; }
@@ -24,26 +24,13 @@ public class LipaNaMpesaRequest
     public string? TransactionDesc { get; set; } // e.g. "Pay for you car ride fare";
 }
 
-public interface IResponse
-{
-
-}
-
 public class LipaNaMpesaResponse : IResponse
-{
-    public string? MerchantRequestID { get; set; }
-    public string? CheckoutRequestID { get; set; }
-    public string? ResponseCode { get; set; }
-    public string? ResponseDescription { get; set; }
-    public string? CustomerMessage { get; set; }
-}
-
-public class Error : IResponse
-{
-    public string? requestId { get; set; }
-    public string? errorCode { get; set; }
-    public string? errorMessage { get; set; }
-}
+{      public string? MerchantRequestID { get; set; }
+        public string? CheckoutRequestID { get; set; }
+        public string? ResponseCode { get; set; }
+        public string? ResponseDescription { get; set; }
+        public string? CustomerMessage { get; set; }
+} 
 
 public static class LipaNaMpesaOnline
 {

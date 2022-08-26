@@ -14,7 +14,7 @@ public class LipaNaMpesaQueryRequest
 }
 
 public class LipaNaMpesaOnlineStatusResponse : IResponse
-{
+{   
     public string? ResponseCode { get; set; }
     public string? ResponseDescription { get; set; }
     public string? MerchantRequestID { get; set; }
