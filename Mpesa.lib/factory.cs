@@ -25,10 +25,10 @@ public static class factory
         {
             BusinessShortCode = config.BusinessShortCode,
             Timestamp = config.Timestamp,
-            PartyB = config.BusinessShortCode,
+            PartyA = config.BusinessShortCode,
             CallBackURL = config.CallBackURL,
             AccountReference = config.AccountReference,
-            Password = config.Password,
+            Password = config.Password,            
         };
     }
 
@@ -53,7 +53,7 @@ public static class factory
         {
             InitiatorName = config.Initiator,
             SecurityCredential = config.SecurityCredential,
-            PartyB = config.BusinessShortCode
+            PartyA = config.BusinessShortCode,
         };
 
     }

@@ -10,7 +10,7 @@ public static class MpesaExtension
 {
     public static IServiceCollection ConfigureMpesa(this IServiceCollection services, Config configuration)
     {
-        services.AddSingleton<IMpesa>(serviceProvider =>
+     services.AddSingleton<IMpesa>(serviceProvider =>
      {
          Enum.TryParse(configuration.Env, out Env enviroment);
          IMpesa client = factory.CreateMpesaClient(configuration, enviroment);

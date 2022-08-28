@@ -15,8 +15,10 @@ public class B2CStatusRequest
 
 public class B2CStatusResponse : IResponse
 { 
-    public string? ResultCode { get; set; }
-    public string? ResultDesc { get; set; }
+    public string? ConversationID { get; set; }
+    public string? OriginatorConversationID { get; set; }     
+    public string? ResponseCode { get; set; }
+    public string? ResponseDescription { get; set; }
 }
 
 public static class B2CStatus
