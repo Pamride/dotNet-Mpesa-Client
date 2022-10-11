@@ -5,4 +5,5 @@ namespace Mpesa.Lib;
 public interface ICredentials
 {
     string GetSecurityCredentialsAsync(IConfig config);
+    string GetProductioncSecurityCredentialsAsync(IConfig config);
 }

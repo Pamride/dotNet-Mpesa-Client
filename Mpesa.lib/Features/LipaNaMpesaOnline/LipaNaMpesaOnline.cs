@@ -34,7 +34,7 @@ public class LipaNaMpesaResponse : IResponse
 
 public static class LipaNaMpesaOnline
 {
-    public static async Task<IResponse> LipaNaMpesaOnlineAsync(this IMpesa mpesaclient, LipaNaMpesaRequest lipanampesaonlinerequest)
+    public static async Task<LipaNaMpesaResponse> LipaNaMpesaOnlineAsync(this IMpesa mpesaclient, LipaNaMpesaRequest lipanampesaonlinerequest)
     {
         var payload = JsonSerializer.Serialize(lipanampesaonlinerequest);
         HttpContent c = new StringContent(payload, Encoding.UTF8, "application/json");

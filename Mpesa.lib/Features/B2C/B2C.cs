@@ -33,7 +33,7 @@ public class B2CResponse : IResponse
 
 public static class B2C
 {
-    public static async Task<IResponse> B2CAsync(this IMpesa mpesaClient, B2CRequest b2CRequest)
+    public static async Task<B2CResponse> B2CAsync(this IMpesa mpesaClient, B2CRequest b2CRequest)
     {
         var payload = JsonSerializer.Serialize(b2CRequest);
         HttpContent content = new StringContent(payload, Encoding.UTF8, "application/json");

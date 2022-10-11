@@ -8,7 +8,7 @@ namespace Mpesa.Lib;
 
 public class MpesaHttpClient : Services.IMpesa
 {
-    private HttpClient? _httpclient;
+    private HttpClient? _httpClient;
     private Env Enviroment;
     private string _consumerKey;
     private string _consumerSecret;
@@ -19,7 +19,7 @@ public class MpesaHttpClient : Services.IMpesa
     {
         get
         {
-            return _httpclient!;
+            return _httpClient!;
         }
     }
 
@@ -40,7 +40,7 @@ public class MpesaHttpClient : Services.IMpesa
 
     private async Task CreateMpesaClient(string baseurl)
     {
-        _httpclient = new HttpClient()
+        _httpClient = new HttpClient()
         {
             BaseAddress = new Uri(baseurl)
         };
@@ -50,24 +50,24 @@ public class MpesaHttpClient : Services.IMpesa
     }
 
     private async Task<AuthResponse> GetTokenAsync()
-    {
-        AuthResponse? response = null;
-        byte[] creds = Encoding.UTF8.GetBytes(_consumerSecret + ":" + _consumerKey);
+    { 
+        byte[] creds = Encoding.UTF8.GetBytes(_consumerKey  + ":" + _consumerSecret);
         String encoded = System.Convert.ToBase64String(creds);
-        _httpclient?.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
-        response = await JsonSerializer.DeserializeAsync<AuthResponse>(await _httpclient!.GetStreamAsync(MpesaRoute.Client_Crendetial));
+        _httpClient?.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded); 
+        AuthResponse? response = await JsonSerializer.DeserializeAsync<AuthResponse>(await _httpClient!.GetStreamAsync(MpesaRoute.Client_Crendetial)); 
         return response!;
     }
 
     private void UpdateAuthorizationToken(string accesstoken)
     {
-        _httpclient!.DefaultRequestHeaders.Remove("Authorization");
-        _httpclient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accesstoken);
+        _httpClient!.DefaultRequestHeaders.Remove("Authorization");
+        _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accesstoken);
     }
 
     private void UpdateTimerRefreshInterval(System.Timers.Timer timer, string interval)
     {
         timer.Interval = Double.Parse(interval) * 1000;
     }
+    
 }
 

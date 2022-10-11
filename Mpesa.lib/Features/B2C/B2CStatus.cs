@@ -27,7 +27,7 @@ public static class B2CStatus
     {
         var payload = JsonSerializer.Serialize(b2CStatusRequest);
         HttpContent c = new StringContent(payload, Encoding.UTF8, "application/json");
-        var response = await mpesaclient.Client.PostAsync(MpesaRoute.B2CUriStatus, c);
+        var response = await mpesaclient.Client.PostAsync(MpesaRoute.B2CTransactionStatus, c);
         B2CStatusResponse? responseJson = await JsonSerializer.DeserializeAsync<B2CStatusResponse>(await response.Content.ReadAsStreamAsync());
         return responseJson!;
     }
