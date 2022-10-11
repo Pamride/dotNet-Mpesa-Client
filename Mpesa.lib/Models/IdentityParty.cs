@@ -1,8 +1,9 @@
-using Mpesa.lib.Enums;
+using Mpesa.Lib.Enums;
 
-namespace mpesa.lib.Models;
+namespace Mpesa.Lib.Models;
 
-public class IdentityParty {
-   public int Party {get; set;}
-   public IdentifierType Type {get;}
+public class IdentityParty
+{
+    public int Party { get; set; }
+    public IdentifierType Type { get; }
 }

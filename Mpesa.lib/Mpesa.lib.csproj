@@ -9,17 +9,17 @@
 
 <PropertyGroup>
   <PackageId>MpesaClient</PackageId>
-  <Version>1.0.0</Version>
-  <Authors>Edwin Muraya, Humphrey Shikunzi</Authors>
+  <Version>1.1.0</Version>
+  <Authors>Edwin Muraya, Humphry Shikunzi</Authors>
   <Company>Safiricar</Company>
-  <Description>
-    An unofficial mpesa client library that intends to abstract away details of working with mpesa Api. Build with simplicity in mind
+  <Description>  
+    This an Mpesa client library intended to help developers integrate in their code and implement Mpesa payment services easily due to abstractions of common details.
   </Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 </PropertyGroup>
 
-
 <ItemGroup>
+  <PackageReference Include="BouncyCastle" Version="1.8.9" /> 
   <PackageReference Include="System.Text.Json" Version="6.0.2-mauipre.1.22054.8" />
   </ItemGroup>
   

@@ -1,17 +1,16 @@
 using Microsoft.Extensions.DependencyInjection;
-using mpesa.lib.settings;
-using Mpesa.lib.Services;
-using Mpesa.lib.Enums;
+using Mpesa.Lib.Settings;
+using Mpesa.Lib.Services;
+using Mpesa.Lib.Enums;
 using Mpesa.Factory;
 
 namespace Mpesa;
 
 public static class MpesaExtension
 {
-
     public static IServiceCollection ConfigureMpesa(this IServiceCollection services, Config configuration)
     {
-        services.AddSingleton<IMpesa>(serviceProvider =>
+     services.AddSingleton<IMpesa>(serviceProvider =>
      {
          Enum.TryParse(configuration.Env, out Env enviroment);
          IMpesa client = factory.CreateMpesaClient(configuration, enviroment);
@@ -20,5 +19,4 @@ public static class MpesaExtension
 
         return services;
     }
-
 }

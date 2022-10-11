@@ -1,9 +1,19 @@
+namespace Mpesa.Lib.Routes;
 
-namespace Mpesa.lib.Routes;
+public static class MpesaRoute
+{
+    // shared
+    public static string BaseAddress = "base address";
+    public static string Client_Crendetial = "oauth/v1/generate?grant_type=client_credentials";
+    
+    public static string Client_Crendetial_production = "oauth/v1/generate";
 
-public static class MpesaRoute {
-   public static string BaseAddress = "base address";
-   public static string Client_Crendetial = "oauth/v1/generate?grant_type=client_credentials";
-   public static string LipaNa_MpesaOnline = "mpesa/stkpush/v1/processrequest";
-   public static string LipaNa_MpesaOnlineStatus = "mpesa/stkpushquery/v1/query";
+    // LipaNaMPesaOnline
+    public static string LipaNa_MpesaOnline = "mpesa/stkpush/v1/processrequest";
+    public static string LipaNa_MpesaOnlineStatus = "mpesa/stkpushquery/v1/query";
+
+    // B2C
+    public static string B2CUri = "mpesa/b2c/v1/paymentrequest";
+    public static string B2CTransactionStatus = "mpesa/transactionstatus/v1/query";
+    public static string B2CAccountBalance = "mpesa/accountbalance/v1/query";
 }

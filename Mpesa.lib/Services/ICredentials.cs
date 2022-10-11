@@ -1,7 +1,9 @@
-using mpesa.lib.settings;
+using Mpesa.Lib.Settings;
 
-namespace Mpesa.lib;
+namespace Mpesa.Lib;
 
-public interface ICredentials {
-  string GetSecurityCredentialsAsync(IConfig config);  
+public interface ICredentials
+{
+    string GetSecurityCredentialsAsync(IConfig config);
+    string GetProductioncSecurityCredentialsAsync(IConfig config);
 }
