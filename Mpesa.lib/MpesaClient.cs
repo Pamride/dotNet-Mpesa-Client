@@ -54,12 +54,10 @@ public class MpesaHttpClient : Services.IMpesa
     
 
     private async Task<AuthResponse> GetTokenAsync() {
-        AuthResponse response = null;
         byte[] creds = Encoding.UTF8.GetBytes(_consumerSecret + ":" + _consumerKey);
         String encoded = System.Convert.ToBase64String(creds);
         _httpclient?.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
-        response = await JsonSerializer.DeserializeAsync<AuthResponse>(await _httpclient.GetStreamAsync(MpesaRoute.Client_Crendetial));
-        return response;
+        return await JsonSerializer.DeserializeAsync<AuthResponse>(await _httpclient.GetStreamAsync(MpesaRoute.Client_Crendetial));
     }
 
     private  void UpdateAuthorizationToken(string accesstoken){

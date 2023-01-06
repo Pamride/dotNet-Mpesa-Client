@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Mpesa", "AspNetCore.Mpesa\AspNetCore.Mpesa.csproj", "{7F98A6E5-EFBD-413C-A934-BC82E2D5AA57}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mpesa.lib", "Mpesa.lib\Mpesa.lib.csproj", "{3CC350F5-13D3-48B6-9F1D-58BBF3CFA1A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mpesa.Tests", "Mpesa.Tests\Mpesa.Tests.csproj", "{88274AEF-A072-4196-92E1-254CD8B94E1D}"
