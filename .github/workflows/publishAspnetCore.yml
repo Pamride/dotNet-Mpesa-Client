@@ -3,11 +3,12 @@ name: Nuget Publish
 on:
   create:
     branches: 
-      - main
+      - release/**
 
   push:
     branches:
     - main
+    - release
 
   pull_request:
     branches:
@@ -49,11 +50,8 @@ jobs:
 
     # - name: Run tests
     #   run: dotnet test /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
-<<<<<<< HEAD
-
-=======
->>>>>>> 17cc2d1 (Added a ci build workflow file)
       
     - name: Publish
       if: startsWith(github.ref, 'refs/heads/release')
       run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+
