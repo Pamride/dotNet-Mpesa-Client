@@ -26,16 +26,15 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapPost("/lipanampesaonline" , async(IMpesa mpesa,string phonenumber, string amount, string url) => {
+     var lipanampesarequest = factory.CreateLipaNaMpesaRequest(settings);
+     lipanampesarequest.Amount = amount;
+     lipanampesarequest.CallBackURL = url;
+     lipanampesarequest.PartyA = phonenumber;
+     lipanampesarequest.PhoneNumber = phonenumber;
 
-         var lipanampesarequest = factory.CreateLipaNaMpesaRequest(settings);
-         lipanampesarequest.Amount = amount;
-         lipanampesarequest.CallBackURL = url;
-         lipanampesarequest.PartyA = phonenumber;
-         lipanampesarequest.PhoneNumber = phonenumber;
-
-       var response =  await mpesa.LipaNaMpesaOnlineAsync(lipanampesarequest); 
-       return Results.Ok(response);
-    });
+    var response =  await mpesa.LipaNaMpesaOnlineAsync(lipanampesarequest); 
+    return Results.Ok(response);
+});
 
 app.MapPost("/lipanampesaonlinestatus", async(IMpesa mpesa, string CheckoutRequestId) =>{
      var lipanampesastatusrequest = factory.CreateLipaNaMpesaStatusRequest(settings);
